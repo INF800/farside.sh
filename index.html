@@ -1,335 +1,407 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- atttribution: https://codepen.io/MondeLionel/pen/RwpMOdQ -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Moon Landing Page</title>
-  <style>
-    /* style.css content starts here */
-    * {
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-    }
+    <!-- atttribution: https://codepen.io/MondeLionel/pen/RwpMOdQ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon Landing Page</title>
+    <style>
+        /* style.css content starts here */
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      background-color: black;
-    }
+        body {
+            background-color: black;
+        }
 
-    a {
-      color: #fff;
-      text-decoration: none;
-    }
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
 
-    video {
-      width: 100%;
-    }
+        video {
+            width: 100%;
+        }
 
-    .wrapper {
-      background-color: transparent;
-      height: 100%;
-      width: 100%;
-      position: relative;
-      overflow: hidden; /* Ensure content doesn't spill out */
-    }
+        .wrapper {
+            background-color: transparent;
+            height: 100%;
+            width: 100%;
+            position: relative;
+            overflow: hidden; /* Ensure content doesn't spill out */
+        }
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: absolute;
-      z-index: 1;
-      width: 100%;
-      padding: 1em; /* Add some padding for better spacing */
-    }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            z-index: 1;
+            width: 100%;
+            padding: 1em; /* Add some padding for better spacing */
+        }
 
-    .logo {
-      background: linear-gradient(90deg, White, gray);
-      height: 35px;
-      width: 35px;
-      margin-left: 1em;
-      border-radius: 100px;
-    }
+        .logo {
+            background: linear-gradient(90deg, White, gray);
+            height: 35px;
+            width: 35px;
+            margin-left: 1em;
+            border-radius: 100px;
+        }
 
-    .footer {
-      /* Hidden as requested */
-      display: none;
-      position: absolute;
-      bottom: 0;
-      z-index: 1;
-      background-color: #fff;
-      left: 0;
-      width: 100%; /* Ensure footer spans full width */
-      justify-content: center; /* Center footer items */
-    }
+        /* Mobile Menu styles */
+        .hamburger {
+            display: none; /* Hidden by default, shown on small screens */
+            cursor: pointer;
+            padding: 10px;
+            z-index: 2; /* Ensure it's above other content */
+        }
 
-    .footer a {
-      color: #000;
-      padding: 1em 2em;
-      font-weight: bold;
-      background-color: floralwhite;
-      font-size: 1.1rem;
-      border-radius: 5px; /* Add rounded corners */
-      margin: 0 5px; /* Add some margin between links */
-    }
+        .hamburger .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: #fff;
+            transition: all 0.3s ease-in-out;
+        }
 
-    .footer a:hover {
-      background-color: azure;
-    }
+        .menu {
+            display: flex;
+        }
 
-    .book {
-      background-color: #fff;
-      color: #000;
-      padding: 1em 2em;
-      font-weight: bold;
-      border-radius: 5px; /* Add rounded corners */
-    }
+        /* Mobile menu dropdown */
+        @media (max-width: 767px) {
+            .hamburger {
+                display: block;
+            }
 
-    .header .menu .menu-item {
-      padding: 0 0.5em;
-    }
+            .menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px; /* Adjust based on header height */
+                right: 1em;
+                background-color: rgba(0, 0, 0, 0.9);
+                width: 200px;
+                border-radius: 5px;
+                padding: 10px 0;
+            }
 
-    .mainContent {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100vw;
-      height: 100vh;
-      text-align: center; /* Center text within main content */
-    }
+            .menu.active {
+                display: flex;
+            }
 
-    .content {
-      color: #fff;
-      width: 90%; /* Adjust width for responsiveness */
-      max-width: 600px; /* Max width for larger screens */
-      padding: 20px;
-      text-align: center; /* Center align for better mobile view */
-    }
+            .header .menu .menu-item {
+                padding: 1em;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
 
-    .content h1 {
-      font-size: 3rem; /* Adjust font size for responsiveness */
-      line-height: 0.8;
-    }
+            .header .menu .menu-item:last-child {
+                border-bottom: none;
+            }
 
-    @media (min-width: 768px) {
-      .content h1 {
-        font-size: 5rem; /* Original size for larger screens */
-      }
-      .content {
-        text-align: end; /* Original alignment for larger screens */
-      }
-    }
+            .book {
+                display: none; /* Hide book button on mobile, or move it to menu */
+            }
+        }
 
-    .lines {
-      position: absolute;
-      top: 0;
-      z-index: 1;
-      height: 100%;
-      width: 100%;
-      display: flex;
-      justify-content: space-evenly;
-    }
 
-    .lines span {
-      border: none;
-      border-left: 1px solid #ffffff21;
-      padding: 1em;
-    }
+        .footer {
+            /* Hidden as requested */
+            display: none;
+            position: absolute;
+            bottom: 0;
+            z-index: 1;
+            background-color: #fff;
+            left: 0;
+            width: 100%; /* Ensure footer spans full width */
+            justify-content: center; /* Center footer items */
+        }
 
-    .gallery {
-      z-index: 2;
-      position: absolute;
-      display: flex;
-      bottom: 10%; /* Adjust position for better mobile layout */
-      right: 5%;
-      left: 5%;
-      justify-content: center; /* Center gallery items */
-      flex-wrap: wrap; /* Allow items to wrap on smaller screens */
-    }
+        .footer a {
+            color: #000;
+            padding: 1em 2em;
+            font-weight: bold;
+            background-color: floralwhite;
+            font-size: 1.1rem;
+            border-radius: 5px; /* Add rounded corners */
+            margin: 0 5px; /* Add some margin between links */
+        }
 
-    .gallery-item {
-      height: 150px; /* Adjust height for responsiveness */
-      width: 80px; /* Adjust width for responsiveness */
-      margin: 10px; /* Adjust margin */
-      background-color: wheat;
-      visibility: hidden; /* Kept as per original */
-      border-radius: 8px; /* Add rounded corners */
-      overflow: hidden; /* Hide overflowing image parts */
-    }
+        .footer a:hover {
+            background-color: azure;
+        }
 
-    .gallery-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Cover the area, crop if necessary */
-    }
+        .book {
+            background-color: #fff;
+            color: #000;
+            padding: 1em 2em;
+            font-weight: bold;
+            border-radius: 5px; /* Add rounded corners */
+        }
 
-    @media (min-width: 768px) {
-      .gallery {
-        bottom: 30%;
-        right: 10%;
-        left: auto; /* Revert to original for larger screens */
-        justify-content: flex-start; /* Revert to original for larger screens */
-      }
-      .gallery-item {
-        height: 200px;
-        width: 100px;
-        margin-right: 10px;
-      }
-    }
+        .header .menu .menu-item {
+            padding: 0 0.5em;
+        }
 
-    .moon-landing {
-      position: absolute;
-      height: 99%;
-      width: 100%;
-      z-index: -1;
-      top: 0;
-      left: 0;
-      overflow: hidden;
-    }
+        .mainContent {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            text-align: center; /* Center text within main content */
+        }
 
-    .moon-landing img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      animation-name: moon-landing;
-      animation-duration: 800s;
-      animation-delay: 1s;
-      animation-timing-function: linear;
-      transform: scale(0.1);
-    }
+        .content {
+            color: #fff;
+            width: 90%; /* Adjust width for responsiveness */
+            max-width: 600px; /* Max width for larger screens */
+            padding: 20px;
+            text-align: center; /* Center align for better mobile view */
+        }
 
-    @keyframes moon-landing {
-      0% {
-        transform: scale(0.1);
-      }
-      25% {
-        transform: rotate(9deg);
-      }
-      75% {
-        transform: rotate(0deg) translateX(50px) translateY(20px);
-      }
-      100% {
-        transform: scale(1) translateX(0) translateY(0);
-      }
-    }
+        .content h1 {
+            font-size: 3rem; /* Adjust font size for responsiveness */
+            line-height: 0.8;
+        }
 
-    /* Loader styling (from original HTML for .wrapper.loading) */
-    .wrapper.loading .lines {
-        opacity: 0.5; /* Example: make lines visible during loading */
-    }
+        @media (min-width: 768px) {
+            .content h1 {
+                font-size: 5rem; /* Original size for larger screens */
+            }
+            .content {
+                text-align: end; /* Original alignment for larger screens */
+            }
+        }
 
-    /* Heart animation styling */
-    .heart-animation {
-      display: inline-block; /* Make it an inline block to apply transforms */
-      animation: heartbeat 1.5s infinite; /* Apply heartbeat animation */
-      color: #fff; /* Changed heart color to white */
-      font-size: 1.2em; /* Slightly larger heart */
-    }
+        .lines {
+            position: absolute;
+            top: 0;
+            z-index: 1;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+        }
 
-    @keyframes heartbeat {
-      0% {
-        transform: scale(1);
-      }
-      25% {
-        transform: scale(1.2);
-      }
-      50% {
-        transform: scale(1);
-      }
-      75% {
-        transform: scale(1.2);
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
-    /* style.css content ends here */
-  </style>
+        .lines span {
+            border: none;
+            border-left: 1px solid #ffffff21;
+            padding: 1em;
+        }
+
+        .gallery {
+            z-index: 2;
+            position: absolute;
+            display: flex;
+            bottom: 10%; /* Adjust position for better mobile layout */
+            right: 5%;
+            left: 5%;
+            justify-content: center; /* Center gallery items */
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+        }
+
+        .gallery-item {
+            height: 150px; /* Adjust height for responsiveness */
+            width: 80px; /* Adjust width for responsiveness */
+            margin: 10px; /* Adjust margin */
+            background-color: wheat;
+            visibility: hidden; /* Kept as per original */
+            border-radius: 8px; /* Add rounded corners */
+            overflow: hidden; /* Hide overflowing image parts */
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Cover the area, crop if necessary */
+        }
+
+        @media (min-width: 768px) {
+            .gallery {
+                bottom: 30%;
+                right: 10%;
+                left: auto; /* Revert to original for larger screens */
+                justify-content: flex-start; /* Revert to original for larger screens */
+            }
+            .gallery-item {
+                height: 200px;
+                width: 100px;
+                margin-right: 10px;
+            }
+        }
+
+        .moon-landing {
+            position: absolute;
+            height: 99%;
+            width: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+        }
+
+        .moon-landing img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            animation-name: moon-landing;
+            animation-duration: 800s;
+            animation-delay: 1s;
+            animation-timing-function: linear;
+            transform: scale(0.1);
+        }
+
+        @keyframes moon-landing {
+            0% {
+                transform: scale(0.1);
+            }
+            25% {
+                transform: rotate(9deg);
+            }
+            75% {
+                transform: rotate(0deg) translateX(50px) translateY(20px);
+            }
+            100% {
+                transform: scale(1) translateX(0) translateY(0);
+            }
+        }
+
+        /* Loader styling (from original HTML for .wrapper.loading) */
+        .wrapper.loading .lines {
+            opacity: 0.5; /* Example: make lines visible during loading */
+        }
+
+        /* Heart animation styling */
+        .heart-animation {
+            display: inline-block; /* Make it an inline block to apply transforms */
+            animation: heartbeat 1.5s infinite; /* Apply heartbeat animation */
+            color: #fff; /* Changed heart color to white */
+            font-size: 1.2em; /* Slightly larger heart */
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.2);
+            }
+            50% {
+                transform: scale(1);
+            }
+            75% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        /* style.css content ends here */
+    </style>
 </head>
 <body>
-  <div class="wrapper loading">
-    <div class="lines">
-      <span></span>
-      <span></span>
-      <span></span>
+    <div class="wrapper loading">
+        <div class="lines">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="https://placehold.co/100x150/ffffff/000000?text=Image+1" alt="Placeholder Image 1">
+            </div>
+            <div class="gallery-item">
+                <img src="https://placehold.co/100x150/ffffff/000000?text=Image+2" alt="Placeholder Image 2">
+            </div>
+            <div class="gallery-item">
+                <img src="https://placehold.co/100x150/ffffff/000000?text=Image+3" alt="Placeholder Image 3">
+            </div>
+        </div>
+        <div class="moon-landing">
+            <img src="https://images.unsplash.com/photo-1446941611757-91d2c3bd3d45?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=733&q=80" alt="Moon Landing Image">
+        </div>
+        <div class="header">
+            <a href="#" class="logo">
+                <!-- Logo content from original template -->
+            </a>
+            <div class="hamburger" id="hamburger-icon">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <nav class="menu" id="main-menu">
+                <a href="#" class="menu-item">Technical Blog</a>
+                <a href="#" class="menu-item">Our Works</a>
+                <a href="#" class="menu-item">For Enterprise</a>
+            </nav>
+            <a href="#" class="book button">Book Now</a>
+        </div>
+        <div class="mainContent">
+            <div class="content lunar">
+                <p>Built with <span class='heart-animation'>❤</span> for Enterprise</p>
+                <h1>a deep tech <br> company</h1>
+            </div>
+        </div>
+        <div class="footer">
+            <!-- The footer content is hidden via CSS -->
+            <a href="#">+ Gallery</a>
+            <a href="#">+ About</a>
+            <a href="#" id="toggle-audio">Sounds</a>
+        </div>
     </div>
-    <div class="gallery">
-      <div class="gallery-item">
-        <img src="https://placehold.co/100x150/ffffff/000000?text=Image+1" alt="Placeholder Image 1">
-      </div>
-      <div class="gallery-item">
-        <img src="https://placehold.co/100x150/ffffff/000000?text=Image+2" alt="Placeholder Image 2">
-      </div>
-      <div class="gallery-item">
-        <img src="https://placehold.co/100x150/ffffff/000000?text=Image+3" alt="Placeholder Image 3">
-      </div>
-    </div>
-    <div class="moon-landing">
-      <img src="https://images.unsplash.com/photo-1446941611757-91d2c3bd3d45?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=733&q=80" alt="Moon Landing Image">
-    </div>
-    <div class="header">
-      <a href="#" class="logo">
-        <!-- Logo content from original template -->
-      </a>
-      <div class="menu">
-        <a href="#" class="menu-item">Technical Blog</a>
-        <a href="#" class="menu-item">Our Works</a>
-        <a href="#" class="menu-item">For Enterprise</a>
-      </div>
-      <a href="#" class="book button">Book Now</a>
-    </div>
-    <div class="mainContent">
-      <div class="content lunar">
-        <p>Built with <span class='heart-animation'>❤</span> for Enterprises</p>
-        <h1>a deep tech <br> company</h1>
-      </div>
-    </div>
-    <div class="footer">
-      <!-- The footer content is hidden via CSS -->
-      <a href="#">+ Gallery</a>
-      <a href="#">+ About</a>
-      <a href="#" id="toggle-audio">Sounds</a>
-    </div>
-  </div>
 
-  <audio id="bgAudio" src="https://dm0qx8t0i9gc9.cloudfront.net/previews/audio/rCIafqApUkbqy3i1t/audioblocks-roberto_track02_rcmrw5HYP_NWM.mp3" autoplay loop></audio>
+    <audio id="bgAudio" src="https://dm0qx8t0i9gc9.cloudfront.net/previews/audio/rCIafqApUkbqy3i1t/audioblocks-roberto_track02_rcmrw5HYP_NWM.mp3" autoplay loop></audio>
 
-  <script>
-    /* script.js content starts here */
-    // const videoSource = `https://moon.nasa.gov/system/video_items/68_jsc2015m000273_orig.m4v`; // Not used in this version
-    // const videoPlayer = document.querySelector("video"); // Not used as video element is commented out
+    <script>
+        /* script.js content starts here */
+        // const videoSource = `https://moon.nasa.gov/system/video_items/68_jsc2015m000273_orig.m4v`; // Not used in this version
+        // const videoPlayer = document.querySelector("video"); // Not used as video element is commented out
 
-    const wrapperDiv = document.querySelector(".wrapper");
+        const wrapperDiv = document.querySelector(".wrapper");
 
-    window.addEventListener('load', (event) => {
-      // Remove loader class to stop loading animation (if any)
-      wrapperDiv.classList.remove("loading");
-    });
+        window.addEventListener('load', (event) => {
+            // Remove loader class to stop loading animation (if any)
+            wrapperDiv.classList.remove("loading");
+        });
 
-    const audioBtn = document.querySelector("#toggle-audio");
-    const audioEl = document.querySelector("#bgAudio");
+        const audioBtn = document.querySelector("#toggle-audio");
+        const audioEl = document.querySelector("#bgAudio");
 
-    // Set initial volume for the background audio
-    audioEl.volume = "0.3";
+        // Set initial volume for the background audio
+        audioEl.volume = "0.3";
 
-    // Add event listener to the audio toggle button
-    audioBtn.addEventListener("click", toggleAudio);
+        // Add event listener to the audio toggle button
+        audioBtn.addEventListener("click", toggleAudio);
 
-    /**
-     * Toggles the playback state of the background audio.
-     * Updates the button text to reflect the current state (Playing/Paused).
-     */
-    function toggleAudio() {
-      if (audioEl.paused) {
-        audioEl.play();
-        audioBtn.innerText = "Playing";
-      } else {
-        audioEl.pause();
-        audioBtn.innerText = "Paused";
-      }
-    }
-    /* script.js content ends here */
-  </script>
+        /**
+         * Toggles the playback state of the background audio.
+         * Updates the button text to reflect the current state (Playing/Paused).
+         */
+        function toggleAudio() {
+            if (audioEl.paused) {
+                audioEl.play();
+                audioBtn.innerText = "Playing";
+            } else {
+                audioEl.pause();
+                audioBtn.innerText = "Paused";
+            }
+        }
+
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger-icon');
+        const mainMenu = document.getElementById('main-menu');
+
+        hamburger.addEventListener('click', () => {
+            mainMenu.classList.toggle('active');
+        });
+        /* script.js content ends here */
+    </script>
 </body>
 </html>
